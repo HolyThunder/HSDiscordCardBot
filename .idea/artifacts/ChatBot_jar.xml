@@ -4,7 +4,10 @@
     <root id="archive" name="ChatBot.jar">
       <element id="module-output" name="ChatBot" />
       <element id="extracted-dir" path="$PROJECT_DIR$/jdiscord.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/okio-1.6.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/commons-codec-1.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/okhttp-3.0.0-RC1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/okhttp-urlconnection-2.0.0-RC1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

@@ -8,12 +8,17 @@ import me.itsghost.jdiscord.exception.NoLoginDetailsException;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) throws IOException, ParseException {
 
-        DiscordAPI api = new DiscordBuilder("BOTACCOUTEMAIL", "BOTACCOUNTPASSWORD").build();
+        SettingsGetter SG = new SettingsGetter();
+        ArrayList<String> settings = new ArrayList<String>();
+        settings = SG.GetSettings();
+
+        DiscordAPI api = new DiscordBuilder(settings.get(0), settings.get(2)).build();
 
         try {
             api.login();

@@ -3,11 +3,11 @@ package me.Corvus;
 import me.itsghost.jdiscord.DiscordAPI;
 import me.itsghost.jdiscord.event.EventListener;
 import me.itsghost.jdiscord.events.UserChatEvent;
-import me.itsghost.jdiscord.events.UserTypingEvent;
 import me.itsghost.jdiscord.message.MessageBuilder;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 /**
@@ -21,7 +21,11 @@ public class ExampleListener implements EventListener {
     }
     public void userChat(UserChatEvent e) throws IOException, ParseException {
 
-        if(cf.GetInfo(e.getMsg().toString()) != null && !e.getUser().toString().equalsIgnoreCase("BOTACCOUNTUSERNAME")) {
+        SettingsGetter SG = new SettingsGetter();
+        ArrayList<String> settings = new ArrayList<String>();
+        settings = SG.GetSettings();
+
+        if(!e.getUser().toString().equalsIgnoreCase(settings.get(1))) {
             e.getGroup().sendMessage(new MessageBuilder()
                     .addString(cf.GetInfo(e.getMsg().toString()))
                     .build(api));

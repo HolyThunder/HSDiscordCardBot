@@ -3,75 +3,104 @@ package me.Corvus;
 /**
  * Created by soulb on 1/5/2016.
  */
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import sun.security.krb5.internal.crypto.Des;
 
 public class CardFinder {
 
+    OkHttpClient client = new OkHttpClient();
+    // code request code here
+    String getCardInfo(String url) throws IOException {
+        Request request = new Request.Builder()
+                .header("X-Mashape-Key", "vLksYid0J9mshCMq3vormXNEOu0Up1tQTNQjsnV8wYLAvMkizG")
+                .url(url)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
 
     @SuppressWarnings("unchecked")
     public String GetInfo(String cardName) throws IOException, ParseException {
+        Boolean hasFound = false;
+
+        ArrayList<String> searches = new ArrayList<String>();
+
+        Matcher m = Pattern.compile("\\[([^)]+)\\]").matcher(cardName);
+        while(m.find()) {
+            searches.add(m.group(1));
+        }
+
+        ArrayList<String> responses = new ArrayList<>();
+
+        // These code snippets use an open-source library. http://unirest.io/java
+        for (String ab : searches) {
+            String response = getCardInfo("https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/" + ab);
+
+            responses.add(response);
+        }
+
         JSONParser parser = new JSONParser();
-        JSONArray a = (JSONArray) parser.parse(new FileReader("C:\\Users\\soulb\\IdeaProjects\\ChatBot\\cards.json"));
+        JSONArray a = (JSONArray) parser.parse(String.valueOf(responses));
+        for (String w:responses) {
+            System.out.println(w);
+        }
+
 
         ArrayList<String> infoArray = new ArrayList<String>();
-        for (Object o : a)
-        {
-            JSONObject person = (JSONObject) o;
-            String name = "";
-            String text = "";
-            String health = "";
-            String attack = "";
-            String cost = "";
-            String flavor = "";
-            if(person.get("name") != null){
-                name = person.get("name").toString();
-            }
-            if(person.get("text") != null){
-                text = person.get("text").toString().replaceAll("(<b>|</b>)", "**").replaceAll("(<i>|</i>)","*").replaceAll("\\$", "");
-            }
-            if(person.get("health") != null){
-                health = person.get("health").toString();
-            }
-            if(person.get("attack") != null){
-                attack = person.get("attack").toString();
-            }
-            if(person.get("cost") != null){
-                cost = person.get("cost").toString();
-            }
-            if(person.get("flavor") != null){
-                flavor = person.get("flavor").toString().replaceAll("(<i>|</i>)", "*");
-            }
-
-            if(cardName.toLowerCase().contains("["+name.toLowerCase()+"]")) {
-                if(!name.isEmpty()) {
+        for (Object o : a) {
+            JSONArray crowd = (JSONArray) o;
+            for (Object i : crowd) {
+                JSONObject person = (JSONObject) i;
+                String name = "";
+                String text = "";
+                String health = "";
+                String durability = "";
+                String attack = "";
+                String cost = "";
+                String flavor = "";
+                if (person.get("name") != null) {
+                    name = person.get("name").toString();
                     infoArray.add("Name: " + name + "\n");
                 }
-                if(!attack.isEmpty()){
+                System.out.println(name);
+                if (person.get("attack") != null) {
+                    attack = person.get("attack").toString();
                     infoArray.add("Attack: " + attack + "\n");
                 }
-                if(!health.isEmpty()){
+                if (person.get("health") != null) {
+                    health = person.get("health").toString();
                     infoArray.add("Health: " + health + "\n");
                 }
-                if(!text.isEmpty()){
-                    infoArray.add("Text: " + text + "\n");
+                if (person.get("durability") != null) {
+                    durability = person.get("durability").toString();
+                    infoArray.add("Durability: " + durability + "\n");
                 }
-                if(!cost.isEmpty()){
+                if (person.get("cost") != null) {
+                    cost = person.get("cost").toString();
                     infoArray.add("Cost: " + cost + "\n");
                 }
-                if(!flavor.isEmpty()){
-                    infoArray.add(flavor + "\n");
+                if (person.get("text") != null) {
+                    text = person.get("text").toString().replaceAll("(<b>|</b>)", "**").replaceAll("(<i>|</i>)", "*").replaceAll("\\$", "");
+                    infoArray.add("Text: " + text + "\n");
                 }
+                if (person.get("flavor") != null) {
+                    flavor = person.get("flavor").toString().replaceAll("(<i>|</i>)", "*");
+                    infoArray.add(flavor);
+                }
+                infoArray.add("\n\n");
             }
+
         }
 
         StringBuilder sb = new StringBuilder();
@@ -80,6 +109,10 @@ public class CardFinder {
             sb.append(s);
             sb.append("\t");
         }
+
+        System.out.println("\n");
+
+        System.out.println(sb.toString());
 
     return sb.toString();
     }
