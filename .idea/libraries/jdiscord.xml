@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="jdiscord">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jdiscord.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/jdiscord.jar!/OSGI-OPT/src" />
+    </SOURCES>
+  </library>
+</component>
