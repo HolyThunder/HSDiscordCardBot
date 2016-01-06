@@ -20,12 +20,16 @@ public class SettingsGetter {
         JSONParser parser = new JSONParser();
         JSONObject a = null;
 
+        String settingsLocal = System.getProperty("user.dir") + "settings.json";
+
         try {
-            a = (JSONObject) parser.parse(new FileReader("C:\\Users\\soulb\\IdeaProjects\\ChatBot\\settings.json"));
+            a = (JSONObject) parser.parse(new FileReader(settingsLocal));
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Where am I?! (check settings)");
         } catch (ParseException e) {
             e.printStackTrace();
+            System.out.println("Where am I?! (check settings)");
         }
 
             JSONObject setting = (JSONObject) a;
