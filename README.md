@@ -7,7 +7,7 @@ Awesome ChatBot for **Discord**. Checks chat messages for card names, and replie
 ----------
 
 ####Example
-![Example Interaction](https://raw.githubusercontent.com/HolyThunder/HSDiscordCardBot/master/example.png"Example Interaction")
+![Example Interaction](https://raw.githubusercontent.com/HolyThunder/HSDiscordCardBot/master/example.png)
 
 ####Settting it up
 
