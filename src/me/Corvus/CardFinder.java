@@ -32,6 +32,7 @@ public class CardFinder {
 
     @SuppressWarnings("unchecked")
     public String GetInfo(String cardName) throws IOException, ParseException {
+        System.out.println(cardName);
         Boolean hasFound = false;
 
         ArrayList<String> searches = new ArrayList<String>();
@@ -51,54 +52,62 @@ public class CardFinder {
         }
 
         JSONParser parser = new JSONParser();
-        JSONArray a = (JSONArray) parser.parse(String.valueOf(responses));
+        Object a =  parser.parse(String.valueOf(responses));
         for (String w:responses) {
             System.out.println(w);
         }
 
 
         ArrayList<String> infoArray = new ArrayList<String>();
-        for (Object o : a) {
+
+        for (Object o : (JSONArray) a) {
             JSONArray crowd = (JSONArray) o;
-            for (Object i : crowd) {
+            for(Object i: (JSONArray) crowd) {
                 JSONObject person = (JSONObject) i;
-                String name = "";
-                String text = "";
-                String health = "";
-                String durability = "";
-                String attack = "";
-                String cost = "";
-                String flavor = "";
-                if (person.get("name") != null) {
-                    name = person.get("name").toString();
-                    infoArray.add("Name: " + name + "\n");
+                if (!(person.get("type").toString().equalsIgnoreCase("Hero") || person.get("type").toString().equalsIgnoreCase("Hero Power"))) {
+                    String name = "";
+                    String text = "";
+                    String health = "";
+                    String durability = "";
+                    String attack = "";
+                    String cost = "";
+                    String flavor = "";
+                    String race = "";
+                    if (person.get("name") != null) {
+                        name = person.get("name").toString();
+                        infoArray.add("Name: " + name + "\n");
+                    }
+                    System.out.println(name);
+                    if (person.get("attack") != null) {
+                        attack = person.get("attack").toString();
+                        infoArray.add("Attack: " + attack + "\n");
+                    }
+                    if (person.get("health") != null) {
+                        health = person.get("health").toString();
+                        infoArray.add("Health: " + health + "\n");
+                    }
+                    if (person.get("durability") != null) {
+                        durability = person.get("durability").toString();
+                        infoArray.add("Durability: " + durability + "\n");
+                    }
+                    if (person.get("cost") != null) {
+                        cost = person.get("cost").toString();
+                        infoArray.add("Cost: " + cost + "\n");
+                    }
+                    if (person.get("text") != null) {
+                        text = person.get("text").toString().replaceAll("(<b>|</b>)", "**").replaceAll("(<i>|</i>)", "*").replaceAll("\\$", "");
+                        infoArray.add("Text: " + text + "\n");
+                    }
+                    if (person.get("race") != null) {
+                        race = person.get("race").toString();
+                        infoArray.add("Tribal: " + race + "\n");
+                    }
+                    if (person.get("flavor") != null) {
+                        flavor = person.get("flavor").toString().replaceAll("(<i>|</i>)", "*");
+                        infoArray.add(flavor);
+                    }
+                    infoArray.add("\n\n");
                 }
-                System.out.println(name);
-                if (person.get("attack") != null) {
-                    attack = person.get("attack").toString();
-                    infoArray.add("Attack: " + attack + "\n");
-                }
-                if (person.get("health") != null) {
-                    health = person.get("health").toString();
-                    infoArray.add("Health: " + health + "\n");
-                }
-                if (person.get("durability") != null) {
-                    durability = person.get("durability").toString();
-                    infoArray.add("Durability: " + durability + "\n");
-                }
-                if (person.get("cost") != null) {
-                    cost = person.get("cost").toString();
-                    infoArray.add("Cost: " + cost + "\n");
-                }
-                if (person.get("text") != null) {
-                    text = person.get("text").toString().replaceAll("(<b>|</b>)", "**").replaceAll("(<i>|</i>)", "*").replaceAll("\\$", "");
-                    infoArray.add("Text: " + text + "\n");
-                }
-                if (person.get("flavor") != null) {
-                    flavor = person.get("flavor").toString().replaceAll("(<i>|</i>)", "*");
-                    infoArray.add(flavor);
-                }
-                infoArray.add("\n\n");
             }
 
         }

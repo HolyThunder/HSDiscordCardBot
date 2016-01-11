@@ -20,7 +20,7 @@ public class SettingsGetter {
         JSONParser parser = new JSONParser();
         JSONObject a = null;
 
-        String settingsLocal = System.getProperty("user.dir") + "settings.json";
+        String settingsLocal = System.getProperty("user.dir") + "/settings.json";
 
         try {
             a = (JSONObject) parser.parse(new FileReader(settingsLocal));

@@ -14,6 +14,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, ParseException {
 
+        System.out.println(">> I am running in: " + System.getProperty("user.dir"));
         SettingsGetter SG = new SettingsGetter();
         ArrayList<String> settings = new ArrayList<String>();
         settings = SG.GetSettings();
