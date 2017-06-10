@@ -1,28 +1,61 @@
-HSDiscordBot
+HearthBot
 ===================
 
 
-Awesome ChatBot for **Discord**. Checks chat messages for card names, and replies with the card information.
+<sup>awesome</sup> [Discord](https://discordapp.com/) _Chatbot_. Gets card details for [HearthStone](http://us.battle.net/hearthstone/en/) cards.  
+Uses [JDiscord](https://github.com/nerd/jDiscord) and data from [Hearthstone API](http://hearthstoneapi.com/).
 
-----------
-
-####Example
+#### Example interaction
 ![Example Interaction](https://raw.githubusercontent.com/HolyThunder/HSDiscordCardBot/master/example.png)
 
-####Settting it up
+-----------
 
-All you need to do to set it up is unpack the .zip, which contains a *ChatBot.jar* file inside and a *settings.json* file. The *settings.json* should look like this
+## Settting it up
 
->{
-  "BotAccountEmail": "YOURBOTACCOUNTEMAIL",
-  "BotAccountUsername": "YOURBOTACCOUNTUSERNAME",
-  "BotAccountPassword": "YOURBOTACCOUNTPASSWORD"
-}
+ * Download the latest release
+ * Unpack it somewhere
+ * edit the ```settings.json``` file as described below
+ * **_[optional]_** edit the ```substitutions.json``` file as described below
+ * run it  
+ i.e.
 
-All you need to do is replace *YOURBOTACCOUNTEMAIL*, *YOURBOTACCOUNTUSERNAME* and *YOURBOTACCOUNTPASSWORD* with your actual bot account information. The bot needs to be in your server, so be sure to log into it's account and click your server's invite link.
-#### Running it
+#### The ```settings.json``` file
 
-After everything is set up (really hard, huh) all you gotta do is run the .jar file. Whether you're on windows or linux (or even mac I think) all you have to do is open a terminal, navigate to the location of the *HSChatBot.jar* and *settings.json* and type
->java -jar HSChatBot.jar
+should look like:
+>{  
+>  "BotAccountEmail": "**YOUR BOTACCOUNT EMAIL**",  
+>  "BotAccountUsername": "**YOUR BOTACCOUNT USERNAME**",  
+>  "BotAccountPassword": "**YOUR BOTACCOUNT PASSWORD**"  
+>}
 
-And you're good to go! Remember to customize your bot by loging into it's account and changing it's avatar!
+where ```YOUR BOT ACCOUNT EMAIL```, ```YOUR BOT ACCOUNT USERNAME``` and ```YOUR BOT ACCOUNT PASSWORD``` should be your actual bot's information.
+
+
+#### [OPTIONAL] The ```substitutions.json``` file
+
+is a file that allows you to set up alias' for card names. If you want ```[AoL]``` to bring up ```Ancient of Lore``` and ```[LoH]``` to bring up ```Lay on Hands``` your substitutions file should look like:
+
+```json
+[  
+  {  
+    "input": "AoL",  
+    "output": "Ancient of Lore"  
+  },
+  {
+    "input": "LoH",
+    "output": "Lay on Hands"
+  }
+]
+```
+
+_(a preset alias file is included)_
+
+### Running it
+
+After both files are set up, all you have to do is run the .jar file. Whether you're on windows, mac or linux, all you have to do is open a terminal, navigate to the directory where all 3 files are, and type
+
+>  java -jar HSChatBot.jar
+
+And you're good to go! Remember to log your bot into your server and it'll reply to messages with card names with the card information!
+
+Customize it by logging into it's account and changing it's avatar!
